@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerador de Orçamentos — Chalés Senhor dos Trilhos</title>
+  <meta name="description" content="Gerador rápido e inteligente de mensagens de orçamento e day use formatadas para WhatsApp.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+  <!-- Datalist de sugestões de valores compartilhada -->
+  <datalist id="datalist-valores"></datalist>
+
+  <!-- Cabeçalho da Aplicação -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand-wrapper">
+        <div class="brand-icon">🏡</div>
+        <div class="brand-info">
+          <h1>Gerador de Orçamentos WhatsApp</h1>
+          <div class="client-badge">
+            <span class="dot"></span>
+            <span id="client-name">Chalés Senhor dos Trilhos</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navegação por Abas -->
+      <nav class="tabs-navigation" aria-label="Navegação de Tipos de Mensagem">
+        <button class="tab-btn active" data-tab="padrao" id="tab-btn-padrao">
+          <span>🏨</span> Orçamento Padrão
+        </button>
+        <button class="tab-btn" data-tab="dayuse_chale" id="tab-btn-dayuse-chale">
+          <span>☀️</span> Day Use com Chalé
+        </button>
+        <button class="tab-btn" data-tab="dados" id="tab-btn-dados">
+          <span>📋</span> Day Use: Solicitação de Dados
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <main class="main-container">
+    
+    <!-- Coluna da Esquerda: Formulários -->
+    <section class="forms-column">
+
+      <!-- PAINEL 1 & 2: Orçamentos (Padrão / Day Use com Chalé) -->
+      <div class="tab-content-panel active" id="tab-panel-budget">
+        
+        <!-- Card: Período e Hóspedes -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">
+              <span>📅</span> Período & Hóspedes
+            </div>
+            <div class="form-group" style="margin: 0; min-width: 180px;">
+              <select id="budget-type-select" class="form-control" style="padding: 0.4rem 0.7rem; font-size: 0.85rem;">
+                <option value="padrao">Orçamento Padrão (14h / 12h)</option>
+                <option value="dayuse_chale">Day Use com Chalé (09h / 17h)</option>
+              </select>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="budget-checkin">Data de Check-in:</label>
+                <input type="date" id="budget-checkin" class="form-control" required />
+              </div>
+              <div class="form-group">
+                <label for="budget-checkout">Data de Check-out:</label>
+                <input type="date" id="budget-checkout" class="form-control" required />
+              </div>
+            </div>
+
+            <div class="form-grid-2" style="margin-top: 1.1rem;">
+              <div class="form-group">
+                <label for="budget-adults">Adultos:</label>
+                <input type="number" id="budget-adults" class="form-control" min="1" max="20" value="2" />
+              </div>
+              <div class="form-group">
+                <label for="budget-children">Crianças:</label>
+                <input type="number" id="budget-children" class="form-control" min="0" max="10" value="0" />
+              </div>
+            </div>
+
+            <!-- Resumo Informativo Dinâmico -->
+            <div class="summary-bar">
+              <div class="summary-pill">
+                <span>Duração:</span>
+                <span class="summary-pill-val" id="budget-nights-badge">1 diária</span>
+              </div>
+              <div class="summary-pill">
+                <span>Total Hóspedes:</span>
+                <span class="summary-pill-val" id="budget-total-guests-badge">02 pessoas</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: Valores por Chalé -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">
+              <span>💰</span> Valores dos Chalés
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chale-list">
+
+              <!-- Chalé 1: Vista do lago -->
+              <div class="chale-item-card" id="wrapper-vista-lago">
+                <div class="chale-card-top">
+                  <div class="chale-header-info">
+                    <h4>
+                      Vista do lago
+                      <span class="chale-badge-cat cat-hydro">Hidro maior</span>
+                    </h4>
+                    <p class="chale-subinfo">Capacidade máxima: 2 pessoas</p>
+                  </div>
+                </div>
+                <div class="chale-controls-grid">
+                  <div class="price-input-wrapper">
+                    <span class="price-currency-prefix">R$</span>
+                    <input type="text" id="val-vista-lago" list="datalist-valores" placeholder="850,00" class="form-control" />
+                  </div>
+                  <label class="checkbox-toggle-container" for="unavail-vista-lago">
+                    <input type="checkbox" id="unavail-vista-lago" />
+                    <span>Indisponível</span>
+                  </label>
+                </div>
+                <div class="chale-warning-msg" id="warn-vista-lago"></div>
+              </div>
+
+              <!-- Chalé 2: Hortênsia -->
+              <div class="chale-item-card" id="wrapper-hortensia">
+                <div class="chale-card-top">
+                  <div class="chale-header-info">
+                    <h4>
+                      Hortênsia
+                      <span class="chale-badge-cat cat-hydro">Hidro menor</span>
+                    </h4>
+                    <p class="chale-subinfo">Capacidade máxima: 2 pessoas</p>
+                  </div>
+                </div>
+                <div class="chale-controls-grid">
+                  <div class="price-input-wrapper">
+                    <span class="price-currency-prefix">R$</span>
+                    <input type="text" id="val-hortensia" list="datalist-valores" placeholder="750,00" class="form-control" />
+                  </div>
+                  <label class="checkbox-toggle-container" for="unavail-hortensia">
+                    <input type="checkbox" id="unavail-hortensia" />
+                    <span>Indisponível</span>
+                  </label>
+                </div>
+                <div class="chale-warning-msg" id="warn-hortensia"></div>
+              </div>
+
+              <!-- Chalé 3: Sem hidro -->
+              <div class="chale-item-card" id="wrapper-sem-hidro">
+                <div class="chale-card-top">
+                  <div class="chale-header-info">
+                    <h4>
+                      Chalés sem hidro
+                      <span class="chale-badge-cat cat-no-hydro">Padrão</span>
+                    </h4>
+                    <p class="chale-subinfo">Capacidade máxima: 4 pessoas (3 a 4 hóspedes)</p>
+                  </div>
+                </div>
+                <div class="chale-controls-grid">
+                  <div class="price-input-wrapper">
+                    <span class="price-currency-prefix">R$</span>
+                    <input type="text" id="val-sem-hidro" list="datalist-valores" placeholder="490,00" class="form-control" />
+                  </div>
+                  <label class="checkbox-toggle-container" for="unavail-sem-hidro">
+                    <input type="checkbox" id="unavail-sem-hidro" />
+                    <span>Indisponível</span>
+                  </label>
+                </div>
+                <div class="chale-warning-msg" id="warn-sem-hidro"></div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- PAINEL 3: Day Use - Solicitação de Dados -->
+      <div class="tab-content-panel" id="tab-panel-dayuse-data">
+        
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">
+              <span>📝</span> Dados da Reserva do Day Use
+            </div>
+          </div>
+          <div class="card-body">
+            
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="dayuse-date">Data do Day Use:</label>
+                <input type="date" id="dayuse-date" class="form-control" required />
+              </div>
+              <div class="form-group">
+                <label>Valor por Pessoa:</label>
+                <div class="radio-price-group">
+                  <label class="radio-price-card">
+                    <input type="radio" name="dayuse-price" value="65" checked />
+                    <span>R$ 65,00</span>
+                  </label>
+                  <label class="radio-price-card">
+                    <input type="radio" name="dayuse-price" value="80" />
+                    <span>R$ 80,00</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-grid-2" style="margin-top: 1.1rem;">
+              <div class="form-group">
+                <label for="dayuse-adults">Quantidade de Adultos (Titular incluso):</label>
+                <input type="number" id="dayuse-adults" class="form-control" min="1" max="50" value="2" />
+              </div>
+              <div class="form-group">
+                <label for="dayuse-children">Quantidade de Crianças:</label>
+                <input type="number" id="dayuse-children" class="form-control" min="0" max="30" value="0" />
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 1.1rem;">
+              <label for="dayuse-phone">Telefone de Contato (Opcional):</label>
+              <input type="tel" id="dayuse-phone" class="form-control" placeholder="(00) 00000-0000" />
+            </div>
+
+            <!-- Banner do Total Calculado -->
+            <div class="dayuse-calc-banner">
+              <div>
+                <div class="dayuse-calc-title">Valor Total da Reserva</div>
+                <div class="dayuse-calc-subtitle" id="dayuse-payers-count">2 pagantes (2 adultos + 0 crianças)</div>
+              </div>
+              <div class="dayuse-calc-val" id="dayuse-total-badge">R$ 130,00</div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Card: Lista de Crianças e Idades -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">
+              <span>🧒</span> Idade das Crianças (Regras de Isenção)
+            </div>
+          </div>
+          <div class="card-body">
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+              ℹ️ Crianças de 0 a 7 anos não pagam (limite de 2 isentas por reserva). A 3ª em diante ou a partir de 8 anos são pagantes. Você pode alterar o status manualmente se necessário.
+            </p>
+            <div id="children-cards-container" class="children-cards-list">
+              <!-- Renderizado dinamicamente via JS -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Coluna da Direita: WhatsApp Preview & Ação -->
+    <aside class="preview-sidebar">
+      <div class="whatsapp-card">
+        
+        <div class="whatsapp-header">
+          <div class="wa-contact">
+            <div class="wa-avatar">🏨</div>
+            <div class="wa-info">
+              <h3>Hóspede (WhatsApp)</h3>
+              <span class="wa-status">online</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="whatsapp-chat-area">
+          <div class="whatsapp-bubble">
+            <pre id="preview-message-text">Carregando mensagem...</pre>
+            <div class="wa-meta">
+              <span>agora</span>
+              <span class="wa-ticks">✓✓</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="whatsapp-actions">
+          <button id="btn-copy-message" class="btn-copy">
+            <span>📋</span> Copiar Mensagem
+          </button>
+        </div>
+
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- Modal de Confirmação: Desbloqueio de Exceção da Política de Crianças -->
+  <div class="modal-backdrop" id="unlock-modal">
+    <div class="modal-card">
+      <div class="modal-icon">⚠️</div>
+      <h3 class="modal-title">Política de Crianças</h3>
+      <p class="modal-desc">
+        O chalé <strong id="unlock-chale-name">Vista do lago</strong> possui hidromassagem e não é recomendado para crianças. Deseja liberar a edição e inserir um valor de exceção mesmo assim?
+      </p>
+      <div class="modal-actions">
+        <button class="btn-modal-cancel" id="btn-modal-cancel-unlock">Cancelar</button>
+        <button class="btn-modal-confirm" id="btn-modal-confirm-unlock">Liberar Edição</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Container de Toasts -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Script da Aplicação -->
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>
