@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Fundo Verde Floresta com cantos arredondados -->
+  <rect width="512" height="512" rx="112" fill="#0F2E23"/>
+  
+  <!-- Chaminé do Chalé -->
+  <rect x="310" y="130" width="30" height="80" fill="#F59E0B" rx="4"/>
+  
+  <!-- Telhado em A do Chalé -->
+  <path d="M 256,75 L 80,340 H 130 L 256,150 L 382,340 H 432 Z" fill="#F59E0B"/>
+  
+  <!-- Trave Horizontal da Estrutura A -->
+  <rect x="180" y="250" width="152" height="20" fill="#F59E0B" rx="4"/>
+  
+  <!-- Trilhos de Trem (Dormentes/Trilhos) -->
+  <!-- Dormentes (Verticais) -->
+  <g stroke="#FFFFFF" stroke-width="16" stroke-linecap="round">
+    <line x1="120" y1="355" x2="120" y2="430"/>
+    <line x1="188" y1="355" x2="188" y2="430"/>
+    <line x1="256" y1="355" x2="256" y2="430"/>
+    <line x1="324" y1="355" x2="324" y2="430"/>
+    <line x1="392" y1="355" x2="392" y2="430"/>
+  </g>
+  
+  <!-- Trilhos (Horizontais) -->
+  <g stroke="#FFFFFF" stroke-width="18" stroke-linecap="round">
+    <line x1="70" y1="375" x2="442" y2="375"/>
+    <line x1="70" y1="415" x2="442" y2="415"/>
+  </g>
+</svg>
